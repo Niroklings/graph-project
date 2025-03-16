@@ -1,13 +1,16 @@
 cmake_minimum_required(VERSION 3.10)
-
 project(shortestPathsOnGraph)
 
 set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED True)
 
-set(SOURCE_FILES shortestPath.cpp)
+include_directories(include)
 
-configure_file(${CMAKE_SOURCE_DIR}/graph.txt ${CMAKE_BINARY_DIR}/graph.txt COPYONLY)
+add_library(Graph src/Graph.cpp)
 
-add_executable(shortestPathsOnGraph ${SOURCE_FILES})
+add_executable(main src/main.cpp)
+target_link_libraries(main Graph)
 
-
+#добавить поддержку тестирования
+#enable_testing()
+#add_subdirectory(tests)
