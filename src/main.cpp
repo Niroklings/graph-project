@@ -2,19 +2,22 @@
 #include <iostream>
 #include <fstream>
 #include <stdexcept>
+#include <vector>
+#include <algorithm>
 
 int main() {
     try {
-        // Создание графа из файла
         Graph g("../graph.txt");
 
-        // Вычисление кратчайших расстояний
         auto distances = g.shortestDistances();
 
-        // Вывод расстояний
-        std::vector<std::pair<int, int>> vec(distances.begin(), distances.end());
-        for (auto it = vec.rbegin(); it != vec.rend(); ++it) {
-            std::cout << it->second << std::endl;
+        std::vector<std::pair<int, int>> vec;
+        for (int i = 0; i < distances.size(); ++i) {
+            vec.emplace_back(i, distances[i]);
+        }
+
+        for (const auto& pair : vec) {
+            std::cout << pair.second << std::endl;
         }
     } catch (const std::exception& e) {
         std::cerr << "Ошибка: " << e.what() << std::endl;

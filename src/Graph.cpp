@@ -25,6 +25,7 @@ void Graph::loadGraphFromFile(const std::string& filename) {
     }
 
     adj.clear();
+    adj.resize(numVertices); 
 
     for (int i = 0; i < numEdges; ++i) {
         if (!std::getline(file, line)) {
@@ -44,14 +45,11 @@ void Graph::loadGraphFromFile(const std::string& filename) {
     }
 }
 
-std::unordered_map<int, int> Graph::shortestDistances() const {
-    std::unordered_map<int, int> distances;
+std::vector<int> Graph::shortestDistances() const {
+    std::vector<int> distances(numVertices, -1);  
     std::queue<int> q;
 
-    for (int i = 0; i < numVertices; ++i) {
-        distances[i] = -1; 
-    }
-    distances[startVertex] = 0;
+    distances[startVertex] = 0;  
     q.push(startVertex);
 
     while (!q.empty()) {
@@ -59,8 +57,8 @@ std::unordered_map<int, int> Graph::shortestDistances() const {
         q.pop();
         int currentDistance = distances[node];
 
-        for (int neighbor : adj.at(node)) {
-            if (distances[neighbor] == -1) { 
+        for (int neighbor : adj[node]) {
+            if (distances[neighbor] == -1) {  
                 distances[neighbor] = currentDistance + 1;
                 q.push(neighbor);
             }
