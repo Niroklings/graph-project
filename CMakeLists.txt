@@ -11,6 +11,11 @@ add_library(Graph src/Graph.cpp)
 add_executable(main src/main.cpp)
 target_link_libraries(main Graph)
 
-#добавить поддержку тестирования
-#enable_testing()
-#add_subdirectory(tests)
+find_package(GTest REQUIRED)
+include_directories(${GTEST_INCLUDE_DIRS})
+
+add_executable(run_tests tests/test_graph.cpp)
+target_link_libraries(run_tests Graph ${GTEST_LIBRARIES} pthread)
+
+enable_testing()
+add_test(NAME GraphTest COMMAND run_tests)

@@ -17,7 +17,11 @@ int main() {
         }
 
         for (const auto& pair : vec) {
+            if(pair.second == -1){
+                std::cout << "Отсутсвует путь" << std::endl;
+            } else{
             std::cout << pair.second << std::endl;
+            }
         }
     } catch (const std::exception& e) {
         std::cerr << "Ошибка: " << e.what() << std::endl;

@@ -1,6 +1,6 @@
 build/
-tests/
 .github/
+googletest/
 
 CMakeCache.txt
 CMakeFiles/
