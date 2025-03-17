@@ -13,14 +13,27 @@ void Graph::loadGraphFromFile(const std::string &filename) {
   }
 
   std::string line;
-  if (!std::getline(file, line) || !(std::istringstream(line) >> numVertices) ||
-      numVertices <= 0) {
+  int lineNumber = 0;
+  std::getline(file, line);
+  lineNumber++;
+  std::istringstream is(line);
+  if (!(is >> numVertices) || is.rdbuf()->in_avail() != 0) {
+    throw std::invalid_argument("Некорректная строка " +
+                                std::to_string(lineNumber) + ": " + line +
+                                "\nПроверьте наличие лишних символов.");
+  } else if (numVertices <= 0) {
     throw std::invalid_argument("Некорректное количество вершин.");
   }
 
   int numEdges;
-  if (!std::getline(file, line) || !(std::istringstream(line) >> numEdges) ||
-      numEdges < 0) {
+  std::getline(file, line);
+  lineNumber++;
+  std::istringstream iss(line);
+  if (!(iss >> numEdges) || iss.rdbuf()->in_avail() != 0) {
+    throw std::invalid_argument("Некорректная строка " +
+                                std::to_string(lineNumber) + ": " + line +
+                                "\nПроверьте наличие лишних символов.");
+  } else if (numEdges < 0) {
     throw std::invalid_argument("Некорректное количество рёбер.");
   }
 
@@ -31,19 +44,32 @@ void Graph::loadGraphFromFile(const std::string &filename) {
     if (!std::getline(file, line)) {
       throw std::invalid_argument("Недостаточно данных для рёбер.");
     }
+    lineNumber++;
     std::istringstream edgeStream(line);
     int u, v;
-    if (!(edgeStream >> u >> v) || u < 0 || v < 0 || u >= numVertices ||
-        v >= numVertices) {
+    if (!(edgeStream >> u >> v) || edgeStream.rdbuf()->in_avail() != 0) {
+      throw std::invalid_argument("Некорректная строка " +
+                                  std::to_string(lineNumber) + ": " + line +
+                                  "\nПроверьте наличие лишних символов.");
+    } else if (u < 0 || v < 0 || u >= numVertices || v >= numVertices) {
       throw std::invalid_argument("Некорректное ребро: " + line);
     }
     adj[u].push_back(v);
     adj[v].push_back(u);
   }
+  std::getline(file, line);
+  lineNumber++;
+  std::istringstream isss(line);
+  if (!(isss >> startVertex) || isss.rdbuf()->in_avail() != 0) {
+    throw std::invalid_argument("Некорректная строка " +
+                                std::to_string(lineNumber) + ": " + line +
+                                "\nПроверьте наличие лишних символов.");
+  } else if (startVertex < 0 || startVertex >= numVertices) {
+    throw std::invalid_argument("Некорректное количество рёбер.");
+  }
 
-  if (!std::getline(file, line) || !(std::istringstream(line) >> startVertex) ||
-      startVertex < 0 || startVertex >= numVertices) {
-    throw std::invalid_argument("Некорректная начальная вершина.");
+  if (std::getline(file, line)) {
+    throw std::invalid_argument("Некорректный файл.");
   }
 }
 

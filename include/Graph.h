@@ -1,21 +1,21 @@
 #ifndef GRAPH_H
 #define GRAPH_H
 
-#include <vector>
 #include <string>
+#include <vector>
 
 class Graph {
 public:
-    Graph(const std::string& filename);
+  Graph(const std::string &filename);
 
-    std::vector<int> shortestDistances() const;  
+  std::vector<int> shortestDistances() const;
 
 private:
-    int numVertices; 
-    std::vector<std::vector<int>> adj;
-    int startVertex;
+  int numVertices;
+  std::vector<std::vector<int>> adj;
+  int startVertex;
 
-    void loadGraphFromFile(const std::string& filename);
+  void loadGraphFromFile(const std::string &filename);
 };
 
 #endif // GRAPH_H
