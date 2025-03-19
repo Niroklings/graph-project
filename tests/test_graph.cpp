@@ -1,4 +1,4 @@
-#include "Graph.h"
+#include "../include/Graph.h"
 #include <cstdio>
 #include <fstream>
 #include <gtest/gtest.h>

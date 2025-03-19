@@ -7,7 +7,7 @@
 
 int main() {
   try {
-    Graph g("../graph.txt");
+    Graph g("graph.txt");
 
     auto distances = g.shortestDistances();
 
