@@ -45,12 +45,11 @@ clean_build() {
 }
 
 if [ "$1" == "docker" ]; then
-    check_command docker
-    check_command cmake
+    check_command docker  
     docker_build_and_run
 elif [ "$1" == "clean" ]; then
     clean_build
 else
-    check_command cmake
+    check_command cmake 
     local_build_and_run
 fi
